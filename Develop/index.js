@@ -5,9 +5,8 @@ const inquirer = require('inquirer')
 const generateMarkdown = require('./utils/generateMarkdown.js')
 
 
-
-// TODO: Create an array of questions for user input
-const questions = [{
+inquirer
+.prompt({
     type: 'confirm ',
     name: 'begin',
     message: 'Are you ready to create a README file?',
@@ -24,16 +23,42 @@ const questions = [{
 },
 {
     type: 'input',
-    name: 'table of contents',
+    name: 'tableOfContents',
     message: 'Please provide a Table of Contents for your project. If there is no Table of Contents, please type "N/A".',
-}
-];
-
-// TODO: Create a function to write README file
-function writeToFile(fileName, data, ) {}
-
-// TODO: Create a function to initialize app
-function init() {}
-
-// Function call to initialize app
-init();
+},
+{
+    type: 'input',
+    name: 'installation',
+    message: 'Please provide installation instructions for your project.',
+},
+{
+    type: 'input',
+    name: 'usage',
+    message: 'How can I use your product?',
+},
+{
+    type: 'input',
+    name: 'contributing',
+    message: 'How can someone contribute to your project?',
+},
+{
+    type: 'input',
+    name: 'github',
+    message: 'What is your GitHub username?',
+},
+{
+    type: 'input',
+    name: 'email',
+    message: 'What is your email address?',
+},
+{
+    type: 'list',
+    name: 'choice',
+    message: 'What is your preferred method of contact?'
+})
+.then((responses) => {
+    const readmeContent = generateMarkdown(responses)
+    fs.writeFile('README.md', readmeContent, (err) =>
+    err ? console.log(err) : console.log('Successfully created README.md!')
+    )
+})
